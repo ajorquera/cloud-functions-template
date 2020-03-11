@@ -1,0 +1,18 @@
+steps:
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["run", "install"]
+  - name: "gcr.io/cloud-builders/npm"
+    args: ["test"]
+
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: [
+    'functions', 
+    'deploy', 
+    'helloWorld', 
+    '--trigger-http', 
+    '--runtime=nodejs8', 
+    '--memory=1024',
+    '--timeout=540s',
+    '--update-env-vars', 'SOME_VAR=${_VAR},'
+  ]
+  dir: 'functions'
